@@ -1,3 +1,9 @@
+const difficultySelect = document.getElementById('difficulty');
+let difficulty = difficultySelect.value;
+
+difficultySelect.addEventListener('change', () => {
+  difficulty = difficultySelect.value;
+});
 const cells = document.querySelectorAll('.cell');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart');
@@ -13,12 +19,19 @@ const winConditions = [
 ];
 
 function checkWinner(b) {
-  for (let [a, bIndex, c] of winConditions) {
+  for (let combo of winConditions) {
+    const [a, bIndex, c] = combo;
     if (b[a] && b[a] === b[bIndex] && b[a] === b[c]) {
-      return b[a];
+      return { winner: b[a], combo };
     }
   }
-  return b.includes(null) ? null : 'Draw';
+  return b.includes(null) ? null : { winner: 'Draw' };
+}
+
+function highlightWin(combo) {
+  combo.forEach(index => {
+    cells[index].classList.add('win');
+  });
 }
 
 function minimax(b, player) {
@@ -45,19 +58,48 @@ function minimax(b, player) {
 }
 
 function bestMove() {
+
+  // 🟢 EASY → Random Move
+  if (difficulty === "easy") {
+    let emptyCells = board
+      .map((val, idx) => val === null ? idx : null)
+      .filter(v => v !== null);
+
+    let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    board[randomIndex] = ai;
+    cells[randomIndex].textContent = ai;
+    return;
+  }
+
+  // 🟡 MEDIUM → 50% Random, 50% Minimax
+  if (difficulty === "medium" && Math.random() < 0.5) {
+    let emptyCells = board
+      .map((val, idx) => val === null ? idx : null)
+      .filter(v => v !== null);
+
+    let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    board[randomIndex] = ai;
+    cells[randomIndex].textContent = ai;
+    return;
+  }
+
+  // 🔴 HARD → Minimax (your original logic)
   let bestScore = -Infinity;
   let move;
+
   for (let i = 0; i < 9; i++) {
     if (!board[i]) {
       board[i] = ai;
       let score = minimax(board, human);
       board[i] = null;
+
       if (score > bestScore) {
         bestScore = score;
         move = i;
       }
     }
   }
+
   board[move] = ai;
   cells[move].textContent = ai;
 }
@@ -66,35 +108,38 @@ function handleCellClick(e) {
   const index = e.target.dataset.index;
   if (board[index] || checkWinner(board)) return;
 
-  // Human move
   board[index] = human;
   e.target.textContent = human;
 
-  let winner = checkWinner(board);
-  if (winner) {
-    endGame(winner);
+  let result = checkWinner(board);
+  if (result) {
+    endGame(result);
     return;
   }
 
-  // AI move
   bestMove();
-  winner = checkWinner(board);
-  if (winner) {
-    endGame(winner);
+
+  result = checkWinner(board);
+  if (result) {
+    endGame(result);
   }
 }
 
-function endGame(winner) {
-  if (winner === 'Draw') {
+function endGame(result) {
+  if (result.winner === 'Draw') {
     message.textContent = "It's a Draw!";
   } else {
-    message.textContent = `${winner} Wins!`;
+    message.textContent = `${result.winner} Wins!`;
+    highlightWin(result.combo);
   }
 }
 
 function restartGame() {
   board.fill(null);
-  cells.forEach(cell => cell.textContent = '');
+  cells.forEach(cell => {
+    cell.textContent = '';
+    cell.classList.remove('win');
+  });
   message.textContent = '';
 }
 

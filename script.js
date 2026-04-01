@@ -1,3 +1,30 @@
+const resetBtn = document.getElementById("resetScore");
+const scoreX = document.getElementById("scoreX");
+const scoreO = document.getElementById("scoreO");
+const scoreDraw = document.getElementById("scoreDraw");
+
+// Load from localStorage
+let score = JSON.parse(localStorage.getItem("ttt-score")) || {
+  X: 0,
+  O: 0,
+  draw: 0
+};
+
+// Display scores
+updateScoreUI();
+
+function updateScoreUI() {
+  scoreX.textContent = score.X;
+  scoreO.textContent = score.O;
+  scoreDraw.textContent = score.draw;
+}
+
+resetBtn.addEventListener("click", () => {
+  score = { X: 0, O: 0, draw: 0 };
+  localStorage.setItem("ttt-score", JSON.stringify(score));
+  updateScoreUI();
+});
+
 const difficultySelect = document.getElementById('difficulty');
 let difficulty = difficultySelect.value;
 
@@ -108,6 +135,7 @@ function handleCellClick(e) {
   const index = e.target.dataset.index;
   if (board[index] || checkWinner(board)) return;
 
+  // Human move
   board[index] = human;
   e.target.textContent = human;
 
@@ -117,29 +145,64 @@ function handleCellClick(e) {
     return;
   }
 
-  bestMove();
+  // 🤖 AI Thinking...
+  message.textContent = "AI is thinking";
+  animateDots();
 
-  result = checkWinner(board);
-  if (result) {
-    endGame(result);
-  }
+  setTimeout(() => {
+    bestMove();
+
+    let result = checkWinner(board);
+    if (result) {
+      endGame(result);
+    } else {
+      message.textContent = "";
+    }
+  }, 600); // delay (you can tweak 400–1000ms)
+}
+
+let dotInterval;
+
+function animateDots() {
+  let dots = 0;
+
+  clearInterval(dotInterval);
+
+  dotInterval = setInterval(() => {
+    dots = (dots + 1) % 4;
+    message.textContent = "AI is thinking" + ".".repeat(dots);
+  }, 300);
 }
 
 function endGame(result) {
+  clearInterval(dotInterval);
+
   if (result.winner === 'Draw') {
     message.textContent = "It's a Draw!";
+    score.draw++;
   } else {
     message.textContent = `${result.winner} Wins!`;
     highlightWin(result.combo);
+
+    if (result.winner === 'X') score.X++;
+    if (result.winner === 'O') score.O++;
   }
+
+  // Save + Update UI
+  localStorage.setItem("ttt-score", JSON.stringify(score));
+  updateScoreUI();
 }
 
 function restartGame() {
   board.fill(null);
+
+  clearInterval(dotInterval);
+
   cells.forEach(cell => {
     cell.textContent = '';
     cell.classList.remove('win');
   });
+
   message.textContent = '';
 }
 

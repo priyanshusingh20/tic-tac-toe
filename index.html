@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic Tac Toe AI</title>
+  <div id="scoreboard">
+  <span>❌ X: <span id="scoreX">0</span></span>
+  <span>⭕ O: <span id="scoreO">0</span></span>
+  <span>🤝 Draw: <span id="scoreDraw">0</span></span>
+  </div>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,6 +32,7 @@
       <div class="cell" data-index="8"></div>
     </div>
     <button id="restart">Restart Game</button>
+    <button id="resetScore">Reset Score</button>
     <p id="message"></p>
   </div>
   <script src="script.js"></script>

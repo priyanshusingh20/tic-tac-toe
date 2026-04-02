@@ -4,37 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic Tac Toe AI</title>
-  <div id="scoreboard">
-  <span>❌ X: <span id="scoreX">0</span></span>
-  <span>⭕ O: <span id="scoreO">0</span></span>
-  <span>🤝 Draw: <span id="scoreDraw">0</span></span>
-  </div>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <h1>Tic Tac Toe (vs AI)</h1>
-  <div id="game">
-    <label for="difficulty">Select Difficulty:</label>
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium" selected>Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    <div class="board">
-      <div class="cell" data-index="0"></div>
-      <div class="cell" data-index="1"></div>
-      <div class="cell" data-index="2"></div>
-      <div class="cell" data-index="3"></div>
-      <div class="cell" data-index="4"></div>
-      <div class="cell" data-index="5"></div>
-      <div class="cell" data-index="6"></div>
-      <div class="cell" data-index="7"></div>
-      <div class="cell" data-index="8"></div>
-    </div>
-    <button id="restart">Restart Game</button>
-    <button id="resetScore">Reset Score</button>
-    <p id="message"></p>
+
+  <!-- Scoreboard -->
+  <div id="scoreboard">
+    <span>❌ X: <span id="scoreX">0</span></span>
+    <span>⭕ O: <span id="scoreO">0</span></span>
+    <span>🤝 Draw: <span id="scoreDraw">0</span></span>
   </div>
+
+  <!-- Difficulty -->
+  <label>Select Difficulty:</label>
+  <select id="difficulty">
+    <option value="easy">Easy</option>
+    <option value="medium" selected>Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+
+  <!-- Board -->
+  <div class="board">
+    <div class="cell" data-index="0"></div>
+    <div class="cell" data-index="1"></div>
+    <div class="cell" data-index="2"></div>
+    <div class="cell" data-index="3"></div>
+    <div class="cell" data-index="4"></div>
+    <div class="cell" data-index="5"></div>
+    <div class="cell" data-index="6"></div>
+    <div class="cell" data-index="7"></div>
+    <div class="cell" data-index="8"></div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="buttons">
+    <button id="restart">🔄 Restart</button>
+    <button id="resetScore">🗑 Reset</button>
+  </div>
+
+  <p id="message"></p>
+
   <script src="script.js"></script>
 </body>
 </html>

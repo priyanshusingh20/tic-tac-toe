@@ -50,10 +50,13 @@ Play against an intelligent AI with multiple difficulty levels and enjoy smooth 
 ```
 tic-tac-toe/
 │
-├── index.html      # Main HTML file
-├── style.css       # Styling and animations
-├── script.js       # Game logic and AI
-└── README.md       # Project documentation
+├── index.html
+├── style.css
+├── script.js
+├── README.md
+│
+└── python-version/
+    └── tic_tac_toe.py
 ```
 
 ---
@@ -73,7 +76,7 @@ The AI uses the **Minimax Algorithm**:
 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/tic-tac-toe.git
+git clone https://github.com/priyanshusingh20/tic-tac-toe.git
 ```
 
 2. Open the project folder
@@ -88,7 +91,8 @@ index.html
 
 ## 📸 Screenshots
 
-*(Add screenshots later for better presentation)*
+<img width="1920" height="833" alt="image" src="https://github.com/user-attachments/assets/152efbc7-4f16-4843-b2ce-fcabcae050a6" />
+
 
 ---
 

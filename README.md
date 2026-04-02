@@ -7,7 +7,7 @@ Play against an intelligent AI with multiple difficulty levels and enjoy smooth 
 
 ## 🚀 Live Demo
 
-👉 *(Add your deployed link here later)*
+(https://tic-tac-toe-sga9.onrender.com)
 
 ---
 

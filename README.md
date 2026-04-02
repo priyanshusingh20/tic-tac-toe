@@ -117,7 +117,7 @@ This project is open-source and available under the MIT License.
 
 **Priyanshu Singh**
 
-* GitHub: https://github.com/your-username
+* GitHub: https://github.com/priyanshusingh20
 
 ---
 
